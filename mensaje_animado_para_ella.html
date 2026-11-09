@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080914">
+<title>Un pequeño universo para ti ♡</title>
+<style>
+:root{--pink:#ff7eb6;--rose:#ffb4d2;--mint:#9affdf;--ink:#080914;--muted:#a7abc2}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 0%,#292044 0%,#111329 42%,#080914 100%);color:#f8f3ff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:0}
+main{position:relative;z-index:1;min-height:100vh;display:grid;place-items:center;padding:28px 16px}
+.shell{width:min(780px,100%);border:1px solid #ffffff20;border-radius:26px;background:linear-gradient(145deg,#17182beF,#101323f2);box-shadow:0 30px 100px #0009,0 0 70px #ff7eb612;overflow:hidden;backdrop-filter:blur(14px)}
+.top{height:48px;display:flex;align-items:center;gap:8px;padding:0 18px;background:#090b18a8;border-bottom:1px solid #ffffff14;color:#9299b8;font:12px ui-monospace,monospace}
+.dot{width:10px;height:10px;border-radius:50%;background:#ff6688}.dot:nth-child(2){background:#ffd166}.dot:nth-child(3){background:#75e5b4}
+.top span{margin-left:8px}
+.content{padding:clamp(25px,6vw,58px);text-align:center}
+.eyebrow{color:var(--mint);font:12px ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+h1{font-size:clamp(36px,8vw,66px);line-height:1.02;letter-spacing:-.055em;margin:18px 0 14px}
+h1 em{font-style:normal;color:var(--rose);text-shadow:0 0 28px #ff7eb655}
+.lead{max-width:530px;margin:0 auto;color:#c2c5d8;line-height:1.75;font-size:15px}
+.orbit{height:145px;display:grid;place-items:center;margin:10px auto 4px;position:relative}
+.heart{font-size:76px;filter:drop-shadow(0 0 18px #ff5c9b88);animation:heartbeat 1.5s ease-in-out infinite;position:relative;z-index:2}
+.ring{position:absolute;width:112px;height:112px;border:1px solid #ff9bc866;border-radius:50%;animation:orbit 8s linear infinite}
+.ring:before,.ring:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 15px var(--mint)}
+.ring:before{top:12px;left:14px}.ring:after{right:3px;bottom:25px;background:var(--rose);box-shadow:0 0 15px var(--rose)}
+.ring.two{width:142px;height:142px;border-style:dashed;opacity:.5;animation-direction:reverse;animation-duration:16s}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.16)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:24px 0 8px}
+button{font:600 14px inherit;cursor:pointer;border:1px solid #ff9bc877;border-radius:999px;padding:13px 20px;color:#fff;background:linear-gradient(110deg,#b83e78,#7445a5);box-shadow:0 8px 28px #c54c8833;transition:transform .2s,box-shadow .2s}
+button:hover{transform:translateY(-3px);box-shadow:0 12px 34px #c54c8860}
+button.secondary{background:#ffffff09;border-color:#ffffff30;color:#d9d9eb;box-shadow:none}
+.panel{max-height:0;opacity:0;overflow:hidden;transform:translateY(12px);transition:max-height 1s ease,opacity .8s ease,transform .8s ease;margin-top:0}
+.panel.show{max-height:900px;opacity:1;transform:translateY(0);margin-top:28px}
+.terminal{text-align:left;background:#080d19;border:1px solid #ffffff20;border-radius:18px;padding:20px 22px;box-shadow:inset 0 0 35px #0005}
+.prompt{font:12px ui-monospace,monospace;color:var(--mint);margin-bottom:15px}
+.message{font-size:16px;line-height:1.9;color:#e8e9f5;white-space:pre-line;min-height:220px}
+.signature{color:var(--rose);font:13px ui-monospace,monospace;margin-top:20px}
+.cursor{display:inline-block;width:8px;height:1.1em;background:var(--mint);vertical-align:middle;margin-left:3px;animation:blink .8s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.footer{margin-top:22px;color:#858ba8;font:11px ui-monospace,monospace}
+.spark{position:fixed;z-index:4;pointer-events:none;font-size:18px;animation:rise 2.4s ease-out forwards}
+@keyframes rise{0%{transform:translateY(0) scale(.5) rotate(0);opacity:0}15%{opacity:1}100%{transform:translateY(-180px) scale(1.3) rotate(35deg);opacity:0}}
+@media(max-width:520px){.content{padding:28px 20px}.message{font-size:15px}.terminal{padding:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<main>
+<article class="shell">
+  <div class="top"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>marco@heart — mensaje_especial.html</span></div>
+  <section class="content">
+    <div class="eyebrow">✦ una pequeña sorpresa ✦</div>
+    <h1>Hay cosas que<br>merecen ser <em>sentidas.</em></h1>
+    <p class="lead">No escribí esto para pedirte nada. Solo quería regalarte un momento y recordarte algo que a veces no digo lo suficiente.</p>
+    <div class="orbit" aria-hidden="true"><div class="ring"></div><div class="ring two"></div><div class="heart">♥</div></div>
+    <div class="actions">
+      <button id="reveal">Abrir mi mensaje ✨</button>
+      <button class="secondary" id="surprise">Un detalle más ♡</button>
+    </div>
+    <div class="panel" id="panel">
+      <div class="terminal">
+        <div class="prompt">marco@corazon:~$ ./decirte_algo.sh</div>
+        <div class="message" id="typed"></div><span class="cursor" id="cursor"></span>
+        <div class="signature">// Compilado con cariño. Sin condiciones. ♥</div>
+      </div>
+    </div>
+    <div class="footer">/* No hay respuesta correcta. Solo quería que lo supieras. */</div>
+  </section>
+</article>
+</main>
+<script>
+const text = `Quiero que sepas que te quiero mucho y que realmente me importas.
+
+Quizás no siempre encuentre las palabras adecuadas para demostrarte lo que siento, pero quiero que sepas que voy a estar para ti en los momentos en los que pueda, tanto en los días buenos como en los difíciles.
+
+No quiero que sientas que tienes que afrontar todo sola. No pretendo solucionar tus problemas ni cambiar lo que sientes; simplemente quiero acompañarte, escucharte y verte bien.
+
+No tienes que darme nada a cambio ni sentirte comprometida conmigo. Me gusta quién eres y quiero que nunca dudes de que cuentas conmigo. ❤️`;
+const panel=document.getElementById('panel'), typed=document.getElementById('typed'), cursor=document.getElementById('cursor');
+let opened=false, timer;
+function typeMessage(){
+  clearInterval(timer);typed.textContent='';let i=0;cursor.style.display='inline-block';
+  timer=setInterval(()=>{typed.textContent=text.slice(0,i+=2);if(i>=text.length){clearInterval(timer);cursor.style.display='none';}},24);
+}
+document.getElementById('reveal').addEventListener('click',()=>{
+  panel.classList.add('show');
+  if(!opened){opened=true;typeMessage();burst(innerWidth/2,innerHeight*.58,22);}
+  else panel.scrollIntoView({behavior:'smooth',block:'center'});
+});
+document.getElementById('surprise').addEventListener('click',()=>burst(innerWidth/2,innerHeight*.48,38));
+function burst(x,y,n){const symbols=['♥','♡','✦','✧','❤'];for(let i=0;i<n;i++){const s=document.createElement('span');s.className='spark';s.textContent=symbols[Math.floor(Math.random()*symbols.length)];s.style.left=(x+(Math.random()-.5)*180)+'px';s.style.top=(y+(Math.random()-.5)*50)+'px';s.style.color=Math.random()>.5?'#ff91bd':'#a0ffe0';s.style.animationDelay=(Math.random()*.45)+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3000);}}
+const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');let stars=[];
+function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);stars=Array.from({length:Math.min(100,Math.floor(innerWidth/9))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.4+.3,a:Math.random(),v:Math.random()*.012+.003}));}
+function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const s of stars){s.a+=s.v;if(s.a>1||s.a<.15)s.v*=-1;ctx.globalAlpha=s.a;ctx.fillStyle='#fff0fa';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;requestAnimationFrame(draw);}
+addEventListener('resize',resize);resize();draw();
+</script>
+</body>
+</html>
